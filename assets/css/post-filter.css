@@ -1,0 +1,338 @@
+/**
+ * Cascading Post Filter
+ *
+ * Everything is scoped under .cpfilter and driven by custom properties, so a
+ * theme can restyle it without fighting specificity. No !important anywhere.
+ */
+
+.cpfilter {
+	--cpfilter-columns: 3;
+	--cpfilter-gap: 1.5rem;
+	--cpfilter-radius: 10px;
+	--cpfilter-border: rgba(0, 0, 0, .12);
+	--cpfilter-muted: rgba(0, 0, 0, .6);
+	--cpfilter-accent: currentColor;
+	--cpfilter-surface: rgba(0, 0, 0, .02);
+}
+
+/* ---------- filters ---------- */
+
+.cpfilter__controls {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding: 1.25rem;
+	margin-bottom: 1.5rem;
+	border: 1px solid var(--cpfilter-border);
+	border-radius: var(--cpfilter-radius);
+	background: var(--cpfilter-surface);
+}
+
+.cpfilter__search-input {
+	width: 100%;
+	padding: .7rem .9rem;
+	border: 1px solid var(--cpfilter-border);
+	border-radius: 8px;
+	font: inherit;
+	background: #fff;
+}
+
+.cpfilter__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 1rem;
+}
+
+.cpfilter__field {
+	display: flex;
+	flex-direction: column;
+	gap: .35rem;
+	flex: 1 1 180px;
+	min-width: 0;
+}
+
+.cpfilter__field label {
+	font-size: .8rem;
+	font-weight: 600;
+	letter-spacing: .02em;
+	color: var(--cpfilter-muted);
+}
+
+.cpfilter__field select {
+	padding: .6rem .7rem;
+	border: 1px solid var(--cpfilter-border);
+	border-radius: 8px;
+	font: inherit;
+	background: #fff;
+	max-width: 100%;
+}
+
+.cpfilter__clear {
+	flex: 0 0 auto;
+	padding: .65rem 1.1rem;
+	border: 1px solid var(--cpfilter-border);
+	border-radius: 8px;
+	background: transparent;
+	font: inherit;
+	cursor: pointer;
+}
+
+.cpfilter__clear:hover,
+.cpfilter__clear:focus-visible {
+	border-color: var(--cpfilter-accent);
+}
+
+/* ---------- results ---------- */
+
+.cpfilter__meta {
+	margin: 0 0 1rem;
+	font-size: .9rem;
+	color: var(--cpfilter-muted);
+}
+
+.cpfilter__grid {
+	display: grid;
+	grid-template-columns: repeat(var(--cpfilter-columns), minmax(0, 1fr));
+	gap: var(--cpfilter-gap);
+	min-height: 120px;
+}
+
+@media (max-width: 900px) {
+	.cpfilter__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 560px) {
+	.cpfilter__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cpfilter__row {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
+
+.cpfilter__card {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--cpfilter-border);
+	border-radius: var(--cpfilter-radius);
+	overflow: hidden;
+	background: #fff;
+	transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.cpfilter__card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 28px -18px rgba(0, 0, 0, .5);
+}
+
+.cpfilter__card-media {
+	position: relative;
+	aspect-ratio: 4 / 3;
+	background: var(--cpfilter-surface);
+}
+
+.cpfilter__card-media img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.cpfilter__badge {
+	position: absolute;
+	top: .6rem;
+	left: .6rem;
+	padding: .25rem .6rem;
+	border-radius: 5px;
+	background: rgba(0, 0, 0, .72);
+	color: #fff;
+	font-size: .68rem;
+	font-weight: 600;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+}
+
+.cpfilter__card-body {
+	display: flex;
+	flex-direction: column;
+	gap: .6rem;
+	padding: 1.1rem;
+	flex: 1;
+}
+
+.cpfilter__badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .35rem;
+}
+
+.cpfilter__tag {
+	padding: .15rem .55rem;
+	border-radius: 4px;
+	background: var(--cpfilter-surface);
+	font-size: .72rem;
+	color: var(--cpfilter-muted);
+}
+
+.cpfilter__card-title {
+	margin: 0;
+	font-size: 1.02rem;
+	line-height: 1.35;
+}
+
+.cpfilter__card-title a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.cpfilter__card-title a:hover {
+	text-decoration: underline;
+}
+
+.cpfilter__card-excerpt {
+	margin: 0;
+	font-size: .9rem;
+	line-height: 1.55;
+	color: var(--cpfilter-muted);
+}
+
+/* ---------- actions ---------- */
+
+.cpfilter__actions {
+	display: flex;
+	gap: .5rem;
+	margin-top: auto;
+	padding-top: .4rem;
+}
+
+.cpfilter__btn {
+	flex: 1;
+	padding: .55rem .8rem;
+	border: 1px solid var(--cpfilter-border);
+	border-radius: 7px;
+	font-size: .85rem;
+	font-weight: 600;
+	text-align: center;
+	text-decoration: none;
+	color: inherit;
+	transition: border-color .18s ease, background .18s ease;
+}
+
+.cpfilter__btn:hover,
+.cpfilter__btn:focus-visible {
+	border-color: var(--cpfilter-accent);
+	background: var(--cpfilter-surface);
+}
+
+/* ---------- pagination ---------- */
+
+.cpfilter__pagination {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: .35rem;
+	margin-top: 2rem;
+}
+
+.cpfilter__page {
+	min-width: 2.4rem;
+	padding: .5rem .7rem;
+	border: 1px solid var(--cpfilter-border);
+	border-radius: 7px;
+	background: transparent;
+	font: inherit;
+	cursor: pointer;
+}
+
+.cpfilter__page:hover,
+.cpfilter__page:focus-visible {
+	border-color: var(--cpfilter-accent);
+}
+
+.cpfilter__page.is-current {
+	background: currentColor;
+	border-color: currentColor;
+}
+
+.cpfilter__page.is-current {
+	color: #111;
+}
+
+.cpfilter__gap {
+	padding: .5rem .3rem;
+	color: var(--cpfilter-muted);
+}
+
+/* ---------- loading ---------- */
+
+.cpfilter__spinner {
+	grid-column: 1 / -1;
+	justify-self: center;
+	width: 34px;
+	height: 34px;
+	margin: 2rem auto;
+	border: 3px solid var(--cpfilter-border);
+	border-top-color: var(--cpfilter-accent);
+	border-radius: 50%;
+	animation: cpfilter-spin .8s linear infinite;
+}
+
+@keyframes cpfilter-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cpfilter__card,
+	.cpfilter__spinner {
+		transition: none;
+		animation: none;
+	}
+}
+
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	white-space: nowrap;
+}
+
+
+/* ---------- post specific bits ---------- */
+
+.cpfilter__card-media {
+	display: block;
+}
+
+.cpfilter__date {
+	font-size: .78rem;
+	letter-spacing: .03em;
+	text-transform: uppercase;
+	color: var(--cpfilter-muted);
+}
+
+.cpfilter__more {
+	margin-top: auto;
+	padding-top: .3rem;
+	font-size: .88rem;
+	font-weight: 600;
+	text-decoration: none;
+	color: inherit;
+}
+
+.cpfilter__more:hover,
+.cpfilter__more:focus-visible {
+	text-decoration: underline;
+}
+
+.cpfilter__field[hidden] {
+	display: none;
+}
